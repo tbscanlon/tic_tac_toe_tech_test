@@ -28,14 +28,32 @@ describe Board do
   describe '#winner?' do
     it { is_expected.to respond_to :winner? }
 
-    before(:each) do
-      subject.move('X', 0)
-      subject.move('X', 1)
-      subject.move('X', 2)
+    it 'Returns true when a player wins horizontally' do
+      subject.move(:X, 0)
+      subject.move(:X, 1)
+      subject.move(:X, 2)
+      expect(subject.winner?(:X)).to be true
     end
 
-    it 'Returns true when a player wins horizontally' do
-      expect(subject.winner? 'X').to be_truthy
+    it 'Returns true when a player wins vertically' do
+      subject.move(:X, 0)
+      subject.move(:X, 3)
+      subject.move(:X, 6)
+      expect(subject.winner?(:X)).to be true
+    end
+
+    it 'Returns true when a player wins diagonally' do
+      subject.move(:X, 0)
+      subject.move(:X, 4)
+      subject.move(:X, 8)
+      expect(subject.winner?(:X)).to be true
+    end
+
+    it 'Returns false when nobody has won' do
+      subject.move(:X, 0)
+      subject.move(:O, 1)
+      subject.move(:X, 2)
+      expect(subject.winner?(:O)).to_not be true
     end
   end
 end

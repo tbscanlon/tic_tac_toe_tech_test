@@ -2,8 +2,9 @@ class Board
   attr_reader :board, :size
 
   DEFAULT_SIZE     = 9
-  HORIZONTAL_INDEX = 0, 1, 2, 3, 4, 5, 6, 7, 8
-  VERTICAL_INDEX   = 0, 3, 6, 1, 4, 7, 2, 5, 8
+  HORIZONTAL_INDEX = [0, 1, 2, 3, 4, 5, 6, 7, 8].freeze
+  VERTICAL_INDEX   = [0, 3, 6, 1, 4, 7, 2, 5, 8].freeze
+  DIAGONAL_INDEX   = [0, 4, 8, 2, 4, 6, 9, 9, 9].freeze
 
   def initialize(size = DEFAULT_SIZE)
     @size = size
@@ -16,8 +17,10 @@ class Board
   end
 
   def winner?(player_symbol)
-    check_horizontal(player_symbol)
-    check_vertical(player_symbol)
+    return true if check_horizontal(player_symbol)
+    return true if check_vertical(player_symbol)
+    return true if check_diagonal(player_symbol)
+    false
   end
 
   private
@@ -28,14 +31,22 @@ class Board
   end
 
   def check_horizontal(player_symbol)
-    horizontal = split(HORIZONTAL_INDEX)
-    horizontal.each do |h|
-      return true if h.all? { |value| value == player_symbol }
-    end
+    split(HORIZONTAL_INDEX).each { |h| return true if line? h, player_symbol }
+    false
   end
 
   def check_vertical(player_symbol)
+    split(VERTICAL_INDEX).each { |h| return true if line? h, player_symbol }
+    false
+  end
 
+  def check_diagonal(player_symbol)
+    split(DIAGONAL_INDEX).each { |h| return true if line? h, player_symbol }
+    false
+  end
+
+  def line?(array, player_symbol)
+    array.all? { |value| value == player_symbol }
   end
 
   def split(i)
