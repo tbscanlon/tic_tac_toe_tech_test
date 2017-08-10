@@ -1,3 +1,9 @@
+require 'simplecov'
+require 'simplecov-console'
+
+require 'board'
+require 'game'
+
 SimpleCov.formatter =
   SimpleCov::Formatter::MultiFormatter.new([
                                              SimpleCov::Formatter::Console

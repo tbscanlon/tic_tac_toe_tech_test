@@ -23,3 +23,10 @@ O X O
 * A turn ends when a player claims a position.
 * A player wins if they make a line by claiming 3 boxes in a row, 3 positions in a column, or 3 positions in a diagonal.
 * If all positions are taken and neither player has a line, the game is a draw.
+
+## User Stories
+```
+As a Player,
+So that I can play against my friends,
+I want to be able to start a game of Tic-Tac-Toe
+```
